@@ -5,9 +5,9 @@ import (
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/kwanok/minsim-api/config"
 	"github.com/kwanok/minsim-api/database"
-	"github.com/kwanok/minsim-api/server/comment"
-	"github.com/kwanok/minsim-api/server/minsim"
-	"github.com/kwanok/minsim-api/server/post"
+	"github.com/kwanok/minsim-api/service/minsim"
+	"github.com/kwanok/minsim-api/service/reddit/comment"
+	"github.com/kwanok/minsim-api/service/reddit/submission"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -60,7 +60,7 @@ func (s *server) Start() error {
 	db := database.NewDB(s.config)
 	db.Migrate()
 
-	post.Register(s.grpcServer, db)
+	submission.Register(s.grpcServer, db)
 	minsim.Register(s.grpcServer, db)
 	comment.Register(s.grpcServer, db)
 

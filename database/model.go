@@ -2,14 +2,27 @@ package database
 
 import "time"
 
-type RedditPost struct {
-	ID        string `gorm:"primaryKey"`
-	Subreddit string
-	Author    string
-	Title     string
-	Url       string
-	Content   string
-	Created   int64
+type RedditSubmission struct {
+	ID                string `gorm:"primaryKey"`
+	Author            string
+	AuthorFlairText   *string
+	Clicked           bool
+	CreatedUtc        int64
+	IsOriginalContent bool
+	IsSelf            bool
+	LinkFlairText     *string
+	Locked            bool
+	Name              string
+	NumComments       int64
+	Over18            bool
+	Permalink         string
+	Score             int64
+	Selftext          string
+	Subreddit         string
+	SubredditId       string
+	Title             string
+	UpvoteRatio       float64
+	Url               string
 }
 
 type Minsim struct {
@@ -25,10 +38,19 @@ type Minsim struct {
 }
 
 type RedditComment struct {
-	ID          string `gorm:"primaryKey"`
-	Author      string
-	Subreddit   string
-	CreatedAt   time.Time
-	Content     string
-	SubredditId string
+	ID            string `gorm:"primaryKey"`
+	Author        string
+	Body          string
+	BodyHtml      string
+	CreatedUtc    int64
+	Distinguished *string
+	Edited        bool
+	IsSubmitter   bool
+	LinkId        string
+	ParentId      string
+	Permalink     string
+	Stickied      bool
+	Submission    string
+	Subreddit     string
+	SubredditId   string
 }

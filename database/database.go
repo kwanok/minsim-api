@@ -22,7 +22,7 @@ func (d *db) Session() *gorm.DB {
 
 func (d *db) Migrate() {
 	models := []interface{}{
-		&RedditPost{},
+		&RedditSubmission{},
 		&RedditComment{},
 		&Minsim{},
 	}
