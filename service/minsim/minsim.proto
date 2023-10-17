@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package server.minsim;
+package service.minsim;
 
-option go_package = "github.com/kwanok/minsim-api/server/minsim";
+option go_package = "github.com/kwanok/minsim-api/service/minsim";
 
 service Minsim {
-  rpc NewPost(NewMinsimRequest) returns (NewMinsimResponse);
+  rpc NewMinsim(NewMinsimRequest) returns (NewMinsimResponse);
 }
 
 message NewMinsimRequest {

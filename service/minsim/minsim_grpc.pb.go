@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v4.24.4
-// source: server/minsim/minsim.proto
+// source: service/minsim/minsim.proto
 
 package minsim
 
@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MinsimClient interface {
-	NewPost(ctx context.Context, in *NewMinsimRequest, opts ...grpc.CallOption) (*NewMinsimResponse, error)
+	NewMinsim(ctx context.Context, in *NewMinsimRequest, opts ...grpc.CallOption) (*NewMinsimResponse, error)
 }
 
 type minsimClient struct {
@@ -33,9 +33,9 @@ func NewMinsimClient(cc grpc.ClientConnInterface) MinsimClient {
 	return &minsimClient{cc}
 }
 
-func (c *minsimClient) NewPost(ctx context.Context, in *NewMinsimRequest, opts ...grpc.CallOption) (*NewMinsimResponse, error) {
+func (c *minsimClient) NewMinsim(ctx context.Context, in *NewMinsimRequest, opts ...grpc.CallOption) (*NewMinsimResponse, error) {
 	out := new(NewMinsimResponse)
-	err := c.cc.Invoke(ctx, "/server.minsim.Minsim/NewPost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/service.minsim.Minsim/NewMinsim", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *minsimClient) NewPost(ctx context.Context, in *NewMinsimRequest, opts .
 // All implementations must embed UnimplementedMinsimServer
 // for forward compatibility
 type MinsimServer interface {
-	NewPost(context.Context, *NewMinsimRequest) (*NewMinsimResponse, error)
+	NewMinsim(context.Context, *NewMinsimRequest) (*NewMinsimResponse, error)
 	mustEmbedUnimplementedMinsimServer()
 }
 
@@ -54,8 +54,8 @@ type MinsimServer interface {
 type UnimplementedMinsimServer struct {
 }
 
-func (UnimplementedMinsimServer) NewPost(context.Context, *NewMinsimRequest) (*NewMinsimResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method NewPost not implemented")
+func (UnimplementedMinsimServer) NewMinsim(context.Context, *NewMinsimRequest) (*NewMinsimResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NewMinsim not implemented")
 }
 func (UnimplementedMinsimServer) mustEmbedUnimplementedMinsimServer() {}
 
@@ -70,20 +70,20 @@ func RegisterMinsimServer(s grpc.ServiceRegistrar, srv MinsimServer) {
 	s.RegisterService(&Minsim_ServiceDesc, srv)
 }
 
-func _Minsim_NewPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Minsim_NewMinsim_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NewMinsimRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MinsimServer).NewPost(ctx, in)
+		return srv.(MinsimServer).NewMinsim(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/server.minsim.Minsim/NewPost",
+		FullMethod: "/service.minsim.Minsim/NewMinsim",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MinsimServer).NewPost(ctx, req.(*NewMinsimRequest))
+		return srv.(MinsimServer).NewMinsim(ctx, req.(*NewMinsimRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,14 +92,14 @@ func _Minsim_NewPost_Handler(srv interface{}, ctx context.Context, dec func(inte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Minsim_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "server.minsim.Minsim",
+	ServiceName: "service.minsim.Minsim",
 	HandlerType: (*MinsimServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "NewPost",
-			Handler:    _Minsim_NewPost_Handler,
+			MethodName: "NewMinsim",
+			Handler:    _Minsim_NewMinsim_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "server/minsim/minsim.proto",
+	Metadata: "service/minsim/minsim.proto",
 }
